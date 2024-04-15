@@ -50,17 +50,40 @@
 <div class="countdown">
   <div class="japanese-text">クッキーレス施行まで残り</div>
   <div class="time-unit">
-    <div class="number">83</div>
+    <div class="number" id="day">83</div>
     <div class="label">DAYS</div>
   </div>
   <div class="time-unit">
-    <div class="number">22</div>
+    <div class="number" id="hour">22</div>
     <div class="label">HOURS</div>
   </div>
   <div class="time-unit">
-    <div class="number">00</div>
+    <div class="number" id="min">00</div>
     <div class="label">MINUTES</div>
   </div>
 </div>
 </body>
 </html>
+
+<script>
+  function updateCountdown() {
+    const targetDate = new Date("July 1, 2024 09:30:00").getTime();
+    const now = new Date().getTime();
+    const timeDifference = targetDate - now;
+  
+    if (timeDifference >= 0) {
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+  
+      document.getElementById('day').innerText = days;
+      document.getElementById('hour').innerText = hours;
+      document.getElementById('min').innerText = minutes;
+    } else {
+      document.querySelector('.countdown').innerHTML = '<div class="japanese-text">カウントダウンが終了しました</div>';
+    }
+  }
+  
+  setInterval(updateCountdown, 60000); // Update the countdown every minute
+  window.onload = updateCountdown; // Also update on load
+  </script>
