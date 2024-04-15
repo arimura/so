@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>IMA HTML5 Simple Demo</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+    <div id="mainContainer">
+      <div id="content">
+        <video id="contentElement" muted>
+        </video>
+      </div>
+      <div id="adContainer"></div>
+    </div>
+    <button id="playButton">Play</button>
+    <script
+      type="text/javascript"
+      src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"
+    ></script>
+  </body>
+  <script>
+    class IMA {
+      constructor(videoElement, adContainer) {
+        this.videoElement = videoElement;
+        this.adContainer = adContainer;
+        this.adDisplayContainer = new google.ima.AdDisplayContainer(
+          adContainer,
+          videoElement
+        );
+        this.adsLoader = new google.ima.AdsLoader(this.adDisplayContainer);
+        this.adsManager = null;
+
+        this.adsLoader.addEventListener(
+          google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+          this.onAdsManagerLoaded.bind(this),
+          false
+        );
+        this.adsLoader.addEventListener(
+          google.ima.AdErrorEvent.Type.AD_ERROR,
+          this.onAdError.bind(this),
+          false
+        );
+      }
+
+      load(endpoint) {
+        const adsRequest = new google.ima.AdsRequest();
+        adsRequest.adTagUrl = endpoint;
+        this.adsLoader.requestAds(adsRequest);
+      }
+
+      onAdsManagerLoaded(adsManagerLoadedEvent) {
+        const adsRenderingSettings = new google.ima.AdsRenderingSettings();
+        adsRenderingSettings.uiElements = [];
+
+        this.adsManager = adsManagerLoadedEvent.getAdsManager(
+          this.videoElement,
+          adsRenderingSettings
+        );
+        this.adsManager.addEventListener(
+          google.ima.AdErrorEvent.Type.AD_ERROR,
+          this.onAdError.bind(this)
+        );
+        this.adsManager.addEventListener(
+          google.ima.AdEvent.Type.ALL_ADS_COMPLETED,
+          this.onAllAdsCompleted.bind(this)
+        );
+
+        this.adDisplayContainer.initialize();
+
+        const width = this.videoElement.clientWidth;
+        const height = this.videoElement.clientHeight;
+        this.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
+        this.adsManager.start();
+      }
+
+      onAllAdsCompleted() {
+        console.log("all ads completed");
+      }
+
+      onAdError(adErrorEvent) {
+        console.log(adErrorEvent.getError());
+      }
+    }
+
+    const video = document.getElementById("contentElement");
+    const adContainer = document.getElementById("adContainer");
+    const ima = new IMA(video, adContainer);
+    // ima.load(
+    //   "https://sh.adingo.jp/vast.xml?api=1%2C2&correlator=12014469742642614000&fluct_cmsid=3&group_id=1000175945&href=https%3A%2F%2Fstg-preview.stg-tbsfree.play.jp%2F&ifa=&kvs=appid%3ATBS+FREE%2Ccounttype%3Avod%2Cdcid%3A%7Brdid%7D%2Cdcos%3A%7Bvr_dcos%7D%2Cluid%3AD44921CC-81B5-436A-86D5-5F9FE29118B6%2Cpc%3AVOXX_test_1%2Cpf%3A%2Croll%3Apreroll%2Csite%3Acu.tbs.co.jp%2Ctagtype%3Abrowser&lmt=&maxdur=60&mimes=video%2Fmp4%2Cvideo%2Fogg%2Cvideo%2Fwebm&pmad=2&pmxd=120&pod=1&protocols=3%2C6%2C7%2C8&scor=0&unit_id=1000280162&vid=VOXX_test_1&vpos=preroll&vraccountid=10192881"
+    // );
+
+  </script>
+</html>
