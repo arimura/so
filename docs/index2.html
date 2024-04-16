@@ -98,16 +98,20 @@
     <div class="countdown" id="countdown">
       <div class="japanese-text">クッキーレス施行まで残り</div>
       <div class="time-unit">
-        <div class="number" id="day">83</div>
+        <div class="number" id="day"></div>
         <div class="label">DAYS</div>
       </div>
       <div class="time-unit">
-        <div class="number" id="hour">22</div>
+        <div class="number" id="hour"></div>
         <div class="label">HOURS</div>
       </div>
       <div class="time-unit">
-        <div class="number" id="min">00</div>
+        <div class="number" id="min"></div>
         <div class="label">MINUTES</div>
+      </div>
+      <div class="time-unit">
+        <div class="number" id="sec"></div>
+        <div class="label">SECONDS</div>
       </div>
     </div>
     <script
@@ -177,8 +181,10 @@
     }
 
     window.onload = function () {
-            switchToVideo();
-            setInterval(switchToVideo, 30000);
+      updateCountdown();
+      switchToVideo();
+      setInterval(switchToVideo, 30000);
+      setInterval(updateCountdown, 60000);
     };
 
     function switchToVideo() {
@@ -198,6 +204,29 @@
         //   "https://sh.adingo.jp/vast.xml?api=1%2C2&correlator=12014469742642614000&fluct_cmsid=3&group_id=1000175945&href=https%3A%2F%2Fstg-preview.stg-tbsfree.play.jp%2F&ifa=&kvs=appid%3ATBS+FREE%2Ccounttype%3Avod%2Cdcid%3A%7Brdid%7D%2Cdcos%3A%7Bvr_dcos%7D%2Cluid%3AD44921CC-81B5-436A-86D5-5F9FE29118B6%2Cpc%3AVOXX_test_1%2Cpf%3A%2Croll%3Apreroll%2Csite%3Acu.tbs.co.jp%2Ctagtype%3Abrowser&lmt=&maxdur=60&mimes=video%2Fmp4%2Cvideo%2Fogg%2Cvideo%2Fwebm&pmad=2&pmxd=120&pod=1&protocols=3%2C6%2C7%2C8&scor=0&unit_id=1000280162&vid=VOXX_test_1&vpos=preroll&vraccountid=10192881"
         "https://voyagegroup.github.io/FluctSDK-Hosting/sdk/gsm-vast.xml"
       );
+    }
+
+    function updateCountdown() {
+      const targetDate = new Date("July 1, 2024 09:30:00").getTime();
+      const now = new Date().getTime();
+      const timeDifference = targetDate - now;
+
+      if (timeDifference >= 0) {
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+          (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+
+        document.getElementById("day").innerText = days;
+        document.getElementById("hour").innerText = hours;
+        document.getElementById("min").innerText = minutes;
+      } else {
+        document.querySelector(".countdown").innerHTML =
+          '<div class="japanese-text">カウントダウンが終了しました</div>';
+      }
     }
   </script>
 </html>
