@@ -1,72 +1,212 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Countdown Timer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
-<style>
-  body {
-    background-color: black;
-    color: white;
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  .countdown {
-    text-align: center;
-  }
-  .japanese-text {
-	font-family: "Noto Sans JP", sans-serif;
-	font-weight: 500;
-	font-size: 60px;
-	margin-bottom: 10px;
-  }
-  .time-unit {
-    margin: 0 50px;
-    display: inline-block;
-  }
-  .number {
-	font-family: "Lato", sans-serif;
-	font-weight: 100;
-	font-style: normal;
-	font-size: 200px;
-  }
-  .label {
-	font-family: "Lato", sans-serif;
-	font-weight: 100;
-	font-style: normal;
-    font-size: 40px;
-  }
-</style>
-</head>
-<body>
-<div class="countdown">
-  <div class="japanese-text">クッキーレス施行まで残り</div>
-  <div class="time-unit">
-    <div class="number" id="day">83</div>
-    <div class="label">DAYS</div>
-  </div>
-  <div class="time-unit">
-    <div class="number" id="hour">22</div>
-    <div class="label">HOURS</div>
-  </div>
-  <div class="time-unit">
-    <div class="number" id="min">00</div>
-    <div class="label">MINUTES</div>
-  </div>
-</div>
-</body>
-</html>
+<html>
+  <head>
+    <title>IMA HTML5 Simple Demo</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .countdown {
+        text-align: center;
+      }
+      .japanese-text {
+        font-family: "Noto Sans JP", sans-serif;
+        font-weight: 500;
+        font-size: 60px;
+        margin-bottom: 10px;
+      }
+      .time-unit {
+        margin: 0 50px;
+        display: inline-block;
+      }
+      .number {
+        font-family: "Lato", sans-serif;
+        font-weight: 100;
+        font-style: normal;
+        font-size: 200px;
+      }
+      .label {
+        font-family: "Lato", sans-serif;
+        font-weight: 100;
+        font-style: normal;
+        font-size: 40px;
+      }
+      #mainContainer {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
 
-<script>
-  function updateCountdown() {
+      #content,
+      #adContainer {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #contentElement {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      #playButton {
+        margin-top: 10px;
+        vertical-align: top;
+        width: 350px;
+        height: 60px;
+        padding: 0;
+        font-size: 22px;
+        color: white;
+        text-align: center;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+        background: #2c3e50;
+        border: 0;
+        border-bottom: 2px solid #22303f;
+        cursor: pointer;
+        -webkit-box-shadow: inset 0 -2px #22303f;
+        box-shadow: inset 0 -2px #22303f;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mainContainer" style="display: none">
+      <div id="content">
+        <video id="contentElement" muted></video>
+      </div>
+      <div id="adContainer"></div>
+    </div>
+    <div class="countdown" id="countdown">
+      <div class="japanese-text">クッキーレス施行まで残り</div>
+      <div class="time-unit">
+        <div class="number" id="day"></div>
+        <div class="label">DAYS</div>
+      </div>
+      <div class="time-unit">
+        <div class="number" id="hour"></div>
+        <div class="label">HOURS</div>
+      </div>
+      <div class="time-unit">
+        <div class="number" id="min"></div>
+        <div class="label">MINUTES</div>
+      </div>
+      <div class="time-unit">
+        <div class="number" id="sec"></div>
+        <div class="label">SECONDS</div>
+      </div>
+    </div>
+    <script
+      type="text/javascript"
+      src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"
+    ></script>
+  </body>
+  <script>
+    class IMA {
+      constructor(videoElement, adContainer, onAllAdsCompleted) {
+        this.videoElement = videoElement;
+        this.adContainer = adContainer;
+        this.onAllAdsCompleted = onAllAdsCompleted;
+        this.adDisplayContainer = new google.ima.AdDisplayContainer(
+          adContainer,
+          videoElement
+        );
+        this.adsLoader = new google.ima.AdsLoader(this.adDisplayContainer);
+        this.adsManager = null;
+
+        this.adsLoader.addEventListener(
+          google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+          this.onAdsManagerLoaded.bind(this),
+          false
+        );
+        this.adsLoader.addEventListener(
+          google.ima.AdErrorEvent.Type.AD_ERROR,
+          this.onAdError.bind(this),
+          false
+        );
+      }
+
+      load(endpoint) {
+        const adsRequest = new google.ima.AdsRequest();
+        adsRequest.adTagUrl = endpoint;
+        this.adsLoader.requestAds(adsRequest);
+      }
+
+      onAdsManagerLoaded(adsManagerLoadedEvent) {
+        const adsRenderingSettings = new google.ima.AdsRenderingSettings();
+        adsRenderingSettings.uiElements = [];
+
+        this.adsManager = adsManagerLoadedEvent.getAdsManager(
+          this.videoElement,
+          adsRenderingSettings
+        );
+        this.adsManager.addEventListener(
+          google.ima.AdErrorEvent.Type.AD_ERROR,
+          this.onAdError.bind(this)
+        );
+        this.adsManager.addEventListener(
+          google.ima.AdEvent.Type.ALL_ADS_COMPLETED,
+          this.onAllAdsCompleted.bind(this)
+        );
+
+        this.adDisplayContainer.initialize();
+
+        const width = this.videoElement.clientWidth;
+        const height = this.videoElement.clientHeight;
+        this.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
+        this.adsManager.start();
+      }
+
+      onAdError(adErrorEvent) {
+        console.log(adErrorEvent.getError());
+      }
+    }
+
+    window.onload = function () {
+            updateCountdown();
+            switchToVideo();
+            setInterval(switchToVideo, 1000 * 60 * 15);
+            setInterval(updateCountdown, 1000); 
+    };
+
+    function switchToVideo() {
+      const mainContainer = document.getElementById("mainContainer");
+      const countdown = document.getElementById("countdown");
+      mainContainer.style.display = "block"; // Set the display property to 'block'
+      countdown.style.display = "none"; // Set the display property to 'none'
+
+      const video = document.getElementById("contentElement");
+      const adContainer = document.getElementById("adContainer");
+      const callback = function () {
+        mainContainer.style.display = "none"; // Set the display property to 'none'
+        countdown.style.display = "block"; // Set the display property to 'block'
+      };
+      const ima = new IMA(video, adContainer, callback);
+      ima.load(
+          "https://sh.adingo.jp/vast.xml?api=1%2C2&correlator=12014469742642614000&fluct_cmsid=3&group_id=1000175945&href=https%3A%2F%2Fstg-preview.stg-tbsfree.play.jp%2F&ifa=&kvs=appid%3ATBS+FREE%2Ccounttype%3Avod%2Cdcid%3A%7Brdid%7D%2Cdcos%3A%7Bvr_dcos%7D%2Cluid%3AD44921CC-81B5-436A-86D5-5F9FE29118B6%2Cpc%3AVOXX_test_1%2Cpf%3A%2Croll%3Apreroll%2Csite%3Acu.tbs.co.jp%2Ctagtype%3Abrowser&lmt=&maxdur=60&mimes=video%2Fmp4%2Cvideo%2Fogg%2Cvideo%2Fwebm&pmad=2&pmxd=120&pod=1&protocols=3%2C6%2C7%2C8&scor=0&unit_id=1000280162&vid=VOXX_test_1&vpos=preroll&vraccountid=10192881"
+        // "https://voyagegroup.github.io/FluctSDK-Hosting/sdk/gsm-vast.xml"
+      );
+    }
+    
+    function updateCountdown() {
     const targetDate = new Date("July 1, 2024 09:30:00").getTime();
     const now = new Date().getTime();
     const timeDifference = targetDate - now;
@@ -75,15 +215,16 @@
       const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-  
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
       document.getElementById('day').innerText = days;
       document.getElementById('hour').innerText = hours;
       document.getElementById('min').innerText = minutes;
+      document.getElementById('sec').innerText = seconds;
     } else {
       document.querySelector('.countdown').innerHTML = '<div class="japanese-text">カウントダウンが終了しました</div>';
     }
   }
-  
-  setInterval(updateCountdown, 60000); // Update the countdown every minute
-  window.onload = updateCountdown; // Also update on load
+
   </script>
+</html>
