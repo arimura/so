@@ -183,7 +183,7 @@
     window.onload = function () {
             updateCountdown();
             switchToVideo();
-            setInterval(switchToVideo, 30000);
+            setInterval(switchToVideo, 1000 * 60 * 15);
             setInterval(updateCountdown, 1000); 
     };
 
@@ -201,8 +201,8 @@
       };
       const ima = new IMA(video, adContainer, callback);
       ima.load(
-          // "https://sh.adingo.jp/vast.xml?api=1%2C2&correlator=12014469742642614000&fluct_cmsid=3&group_id=1000175945&href=https%3A%2F%2Fstg-preview.stg-tbsfree.play.jp%2F&ifa=&kvs=appid%3ATBS+FREE%2Ccounttype%3Avod%2Cdcid%3A%7Brdid%7D%2Cdcos%3A%7Bvr_dcos%7D%2Cluid%3AD44921CC-81B5-436A-86D5-5F9FE29118B6%2Cpc%3AVOXX_test_1%2Cpf%3A%2Croll%3Apreroll%2Csite%3Acu.tbs.co.jp%2Ctagtype%3Abrowser&lmt=&maxdur=60&mimes=video%2Fmp4%2Cvideo%2Fogg%2Cvideo%2Fwebm&pmad=2&pmxd=120&pod=1&protocols=3%2C6%2C7%2C8&scor=0&unit_id=1000280162&vid=VOXX_test_1&vpos=preroll&vraccountid=10192881"
-        "https://voyagegroup.github.io/FluctSDK-Hosting/sdk/gsm-vast.xml"
+          "https://sh.adingo.jp/vast.xml?api=1%2C2&correlator=12014469742642614000&fluct_cmsid=3&group_id=1000175945&href=https%3A%2F%2Fstg-preview.stg-tbsfree.play.jp%2F&ifa=&kvs=appid%3ATBS+FREE%2Ccounttype%3Avod%2Cdcid%3A%7Brdid%7D%2Cdcos%3A%7Bvr_dcos%7D%2Cluid%3AD44921CC-81B5-436A-86D5-5F9FE29118B6%2Cpc%3AVOXX_test_1%2Cpf%3A%2Croll%3Apreroll%2Csite%3Acu.tbs.co.jp%2Ctagtype%3Abrowser&lmt=&maxdur=60&mimes=video%2Fmp4%2Cvideo%2Fogg%2Cvideo%2Fwebm&pmad=2&pmxd=120&pod=1&protocols=3%2C6%2C7%2C8&scor=0&unit_id=1000280162&vid=VOXX_test_1&vpos=preroll&vraccountid=10192881"
+        // "https://voyagegroup.github.io/FluctSDK-Hosting/sdk/gsm-vast.xml"
       );
     }
     
