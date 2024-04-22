@@ -186,7 +186,7 @@
 
     window.onload = function () {
             // updateCountdown();
-            switchToVideo();
+            // switchToVideo();
             setInterval(switchToVideo, 1000 * 60 * 3);
             // setInterval(updateCountdown, 1000); 
     };
@@ -200,8 +200,9 @@
       const video = document.getElementById("contentElement");
       const adContainer = document.getElementById("adContainer");
       const callback = function () {
-        mainContainer.style.display = "none"; // Set the display property to 'none'
-        countdown.style.display = "block"; // Set the display property to 'block'
+        location.reload();
+        // mainContainer.style.display = "none"; // Set the display property to 'none'
+        // countdown.style.display = "block"; // Set the display property to 'block'
       };
       const ima = new IMA(video, adContainer, callback);
       ima.load(
